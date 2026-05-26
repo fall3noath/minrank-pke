@@ -25,29 +25,27 @@ All arithmetic is over `n x n` matrices over GF(2).
 
 ## Scheme (Figure 1 of the paper)
 
-**Parameters:** `n`, `k`, `r`, `t` where `t` divides `n`, `r^2 < t - log(n)`, and `(n/t)^2 - 2k - 1 > 0`
+**Parameters:** $n$, $k$, $r$, $t$ where $t \mid n$, $r^2 < t - \log n$, and $(n/t)^2 - 2k - 1 = \omega(\log n)$
 
 **KeyGen:**
-1. Sample a random binary vector `s` of length `k`
-2. Sample `k` random `n x n` matrices `A_1, ..., A_k` over GF(2)
-3. Sample a random `n x n` matrix `E` over GF(2) with `rank(E) <= r`
-4. Set `sk = s` and `pk = (A, Y)` where `Y = A(s) + E`
+1. Sample $s \overset{\$}{\leftarrow} \mathbb{F}_2^k$, $\mathbf{A} = (A_1,\ldots,A_k) \overset{\$}{\leftarrow} (\mathbb{F}_2^{n \times n})^k$, $E \overset{\$}{\leftarrow} \mathbb{F}_2^{n \times n}$ with $\mathrm{rank}(E) \leq r$
+2. Set $\mathrm{sk} = s$ and $\mathrm{pk} = (\mathbf{A},\ Y = \mathbf{A}(s) + E)$
 
-> `A(s)` denotes the linear combination `s_1*A_1 + ... + s_k*A_k` over GF(2).
+> $\mathbf{A}(s)$ denotes the linear combination $\sum_i s_i A_i$ over $\mathbb{F}_2$.
 
-**Encrypt** bit `x` in `{0, 1}`:
-- If `x = 0`: sample a random `n x n` matrix `R` with `rank(R) <= r`, output `ct = <R, (A_1,...,A_k, Y)>_t`
-- If `x = 1`: output `ct = (V_1, ..., V_{k+1})` where each `V_i` is a uniformly random `t x t` matrix over GF(2)
+**Encrypt** bit $x \in \{0, 1\}$:
+- If $x = 0$: sample $R \overset{\$}{\leftarrow} \mathbb{F}_2^{n \times n}$ with $\mathrm{rank}(R) \leq r$, output $\mathrm{ct} = \langle R,\ (A_1,\ldots,A_k, Y) \rangle_t$
+- If $x = 1$: output $\mathrm{ct} = (V_1,\ldots,V_{k+1})$ where each $V_i \overset{\$}{\leftarrow} \mathbb{F}_2^{t \times t}$
 
-**Decrypt** ciphertext `ct = (C_1, ..., C_k, C_{k+1})` with secret key `s`:
-1. Compute `M = C_{k+1} - sum_{i=1}^{k} s_i * C_i` over GF(2)
-2. If `rank(M) < t - log(n)^(2/3)`, output `0`; otherwise output `1`
+**Decrypt** $\mathrm{ct} = (C_1,\ldots,C_k,C_{k+1})$ with secret key $s$:
+1. Compute $M = C_{k+1} - \sum_{i=1}^k s_i \cdot C_i$ over $\mathbb{F}_2$
+2. If $\mathrm{rank}(M) < t - \log^{2/3} n$, output $0$; otherwise output $1$
 
-**Blockwise inner product** `<A, B>_t`: a `t x t` matrix whose `(i,j)`-th entry is the Frobenius inner product (sum of entrywise products mod 2) of the `(i,j)`-th `(n/t) x (n/t)` block of `A` with the corresponding block of `B`.
+**Blockwise inner product** $\langle A, B \rangle_t$: a $t \times t$ matrix whose $(i,j)$-th entry is the Frobenius inner product of the $(i,j)$-th $(n/t) \times (n/t)$ blocks of $A$ and $B$.
 
 **Why it works:**
-- When `x = 0`: `M = <R, E>_t`, so `rank(M) <= r^2 < t - log(n)` by Claim 3.15 of the paper — decrypts to `0` correctly.
-- When `x = 1`: `M` is a random `t x t` matrix, which has full rank with overwhelming probability — decrypts to `1` correctly.
+- When $x=0$: $M = \langle R, E \rangle_t$, so $\mathrm{rank}(M) \leq r^2 < t - \log n$ by Claim 3.15 — decrypts to $0$ correctly.
+- When $x=1$: $M$ is a random $t \times t$ matrix, which has full rank with overwhelming probability — decrypts to $1$ correctly.
 
 ---
 
@@ -88,9 +86,9 @@ print(scheme.decrypt(sk, ct1, params.k))  # 1
 |------|---|---|---|---|-------|
 | `Params.toy()` | 64 | 16 | 4 | 1 | Functional tests only, no security |
 | `Params.small()` | 128 | 32 | 5 | 2 | Demo only, no security |
-| `Params.medium()` | 256 | 32 | 10 | 2 | Heuristic security, low — increase n for real use |
+| `Params.medium()` | 256 | 32 | 10 | 2 | Heuristic security, low — increase $n$ for real use |
 
-For meaningful security follow Section 4 of the paper. Setting 1 from the paper uses `t = O(n^(1/2))`, `k = O(n)`, `r = O(n^(1/4))`, giving best known attack cost around `2^O(n^(1/4))`.
+For meaningful security follow Section 4 of the paper. Setting 1 uses $t = \Theta(n^{1/2})$, $k = \Theta(n)$, $r = \Theta(n^{1/4})$, giving best known attack cost around $2^{O(n^{1/4})}$.
 
 ---
 
