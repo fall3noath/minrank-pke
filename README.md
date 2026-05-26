@@ -28,14 +28,14 @@ All arithmetic is over `n x n` matrices over GF(2).
 **Parameters:** $n$, $k$, $r$, $t$ where $t \mid n$, $r^2 < t - \log n$, and $(n/t)^2 - 2k - 1 = \omega(\log n)$
 
 **KeyGen:**
-1. Sample $s \xleftarrow{\$} \mathbb{F}_2^k$, $\mathbf{A} = (A_1,\ldots,A_k) \xleftarrow{\$} (\mathbb{F}_2^{n \times n})^k$, $E \xleftarrow{\$} \mathbb{F}_2^{n \times n}$ with $\mathrm{rank}(E) \leq r$
+1. Sample $s \gets \{0,1\}^k$ uniformly, $\mathbf{A} = (A_1,\ldots,A_k) \gets (\mathbb{F}_2^{n \times n})^k$ uniformly, $E \gets \mathbb{F}_2^{n \times n}$ uniformly with $\mathrm{rank}(E) \leq r$
 2. Set $\mathrm{sk} = s$ and $\mathrm{pk} = (\mathbf{A},\ Y = \mathbf{A}(s) + E)$
 
 > $\mathbf{A}(s)$ denotes the linear combination $\sum_i s_i A_i$ over $\mathbb{F}_2$.
 
-**Encrypt** bit $x \in \{0, 1\}$:
-- If $x = 0$: sample $R \xleftarrow{\$} \mathbb{F}_2^{n \times n}$ with $\mathrm{rank}(R) \leq r$, output $\mathrm{ct} = \langle R,\ (A_1,\ldots,A_k, Y) \rangle_t$
-- If $x = 1$: output $\mathrm{ct} = (V_1,\ldots,V_{k+1})$ where each $V_i \xleftarrow{\$} \mathbb{F}_2^{t \times t}$
+**Encrypt** bit $x \in \{0,1\}$:
+- If $x = 0$: sample $R \gets \mathbb{F}_2^{n \times n}$ uniformly with $\mathrm{rank}(R) \leq r$, output $\mathrm{ct} = \langle R,\ (A_1,\ldots,A_k, Y) \rangle_t$
+- If $x = 1$: output $\mathrm{ct} = (V_1,\ldots,V_{k+1})$ where each $V_i \gets \mathbb{F}_2^{t \times t}$ uniformly
 
 **Decrypt** $\mathrm{ct} = (C_1,\ldots,C_k,C_{k+1})$ with secret key $s$:
 1. Compute $M = C_{k+1} - \sum_{i=1}^k s_i \cdot C_i$ over $\mathbb{F}_2$
