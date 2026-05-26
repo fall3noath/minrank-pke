@@ -23,10 +23,16 @@ Python implementation of [Public-Key Encryption from the MinRank Problem](https:
 ```python
 from minrank_pke import MinRankPKE, Params
 
-scheme = MinRankPKE(Params.toy())
+params = Params.toy()
+scheme = MinRankPKE(params)
+
 pk, sk = scheme.keygen()
-ct = scheme.encrypt(pk, 0)
-print(scheme.decrypt(sk, ct))  # 0
+
+ct0 = scheme.encrypt(pk, 0)
+ct1 = scheme.encrypt(pk, 1)
+
+print(scheme.decrypt(sk, ct0, params.k))  # 0
+print(scheme.decrypt(sk, ct1, params.k))  # 1
 ```
 
 ## Parameters
