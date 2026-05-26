@@ -27,6 +27,7 @@ scheme = MinRankPKE(Params.toy())
 pk, sk = scheme.keygen()
 ct = scheme.encrypt(pk, 0)
 print(scheme.decrypt(sk, ct))  # 0
+```
 
 ## Parameters
 
