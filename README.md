@@ -5,13 +5,10 @@ Python implementation of [Public-Key Encryption from the MinRank Problem](https:
 
 **Parameters:** $n$, $k = k(n)$, $r = r(n)$, $t = t(n)$ where $t \mid n$, $r^2 < t - \log n$, and $(n/t)^2 - 2k = \omega(\log n)$.
 
----
-
 ### **KeyGen**$(1^n)$
 1. Sample $s \leftarrow \mathbb{F}_2^k$; $A \leftarrow (\mathbb{F}_2^{n \times n})^k$; $E \leftarrow \mathbb{F}_2^{n \times n}$ s.t. $\mathrm{rank}(E) \le r$.
 2. Set $\mathrm{sk} = s$ and $\mathrm{pk} = (A,\, A(s) + E)$.
 
----
 
 ### **Enc**$(\mathrm{pk},\, x \in \{0,1\})$
 1. Parse $\mathrm{pk} = (A^\prime_1, A^\prime_2, \ldots, A^\prime_{k+1}) = A^\prime$.
@@ -22,7 +19,6 @@ Python implementation of [Public-Key Encryption from the MinRank Problem](https:
    $$\mathrm{ct} = \langle R, A' \rangle_t$$
 4. The encryption algorithm outputs $\mathrm{ct}$.
 
----
 
 ### **Dec**$(\mathrm{sk} = s,\, \mathrm{ct})$
 1. Parse $\mathrm{ct} = (C_1, C_2, \cdots, C_k, C_{k+1})$.
