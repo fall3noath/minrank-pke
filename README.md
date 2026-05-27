@@ -14,7 +14,7 @@ Python implementation of [Public-Key Encryption from the MinRank Problem](https:
 ---
 
 ### **Enc**$(\mathrm{pk},\, x \in \{0,1\})$
-1. Parse $\mathrm{pk} = (A'_1, A'_2, \ldots, A'_{k+1}) = A'$.
+1. Parse $\mathrm{pk} = (A^\prime_1, A^\prime_2, \ldots, A^\prime_{k+1}) = A^\prime$.
 2. If $x = 1$, sample $k+1$ random matrices:
    $$(V_1, \ldots, V_{k+1}) \leftarrow (\mathbb{F}_2^{t \times t})^{k+1}$$
    and set these to be the ciphertext $\mathrm{ct}$.
