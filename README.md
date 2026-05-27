@@ -54,18 +54,3 @@ pytest tests/ -v
 ```
 
 All 27 tests pass, covering GF(2) arithmetic, parameter validation, encrypt/decrypt correctness, and the core algebraic identity `M = <R, E>_t`.
-
-
----
-
-## Citation
-
-```bibtex
-@misc{cryptoeprint:2025/1833,
-  author = {Rohit Chatterjee and Changrui Mu and Prashant Nalini Vasudevan},
-  title  = {Public-Key Encryption from the {MinRank} Problem},
-  howpublished = {Cryptology ePrint Archive, Paper 2025/1833},
-  year   = {2025},
-  url    = {https://eprint.iacr.org/2025/1833}
-}
-```
